@@ -1,5 +1,5 @@
 %Script to make line plots of standardised mortality rates by forest type
-%(standardised to C veg)
+%(standardised to C veg) and line plots of NPP sums by forest type
 %
 %Dependencies
 %-global_grid_area.m
@@ -328,6 +328,41 @@ for nn=1:nmod %Make one plot per model
     set(s(7),'Position',[0.07 0.07 0.25 0.23])
     set(s(8),'Position',[0.37 0.07 0.25 0.23])
     set(s(9),'Position',[0.67 0.07 0.25 0.23])
+    
+    %NPP plots (NOT normalised by Cveg)
+    figure
+    cmap=[16, 100, 112;... %CABLE
+        182, 0, 38;... %JULES
+        85, 165, 28;... %LPJ-GUESS
+        234, 113, 37;... %LPJmL
+        163, 193, 173;... %ORCHIDEE
+        104, 172, 229]; %SEIB
+    cmap=cmap/256;
+    for bb=1:nESAphen
+        s(bb)=subplot(3,3,bb);
+        hold on
+        for mm=1:nmod
+            plot(1900+y1:1900+y2,runmean(nppnotnorm_mask_mean(mm,:,bb),15)/1e12,'linewidth',2,'color',cmap(mm,:))
+        end
+        title(ESA_phen_label{bb},'Fontsize',9)
+        set(gca,'XLim',[1900+y1,1900+y2])
+        if bb==nESAphen
+            legend(modelsonly)
+        end
+        if bb==1 || bb==4 || bb==7
+            ylabel('Pg C a^{-1}')
+        end
+    end
+    set(s(1),'Position',[0.07 0.67 0.25 0.23])
+    set(s(2),'Position',[0.37 0.67 0.25 0.23])
+    set(s(3),'Position',[0.67 0.67 0.25 0.23])
+    set(s(4),'Position',[0.07 0.37 0.25 0.23])
+    set(s(5),'Position',[0.37 0.37 0.25 0.23])
+    set(s(6),'Position',[0.67 0.37 0.25 0.23])
+    set(s(7),'Position',[0.07 0.07 0.25 0.23])
+    set(s(8),'Position',[0.37 0.07 0.25 0.23])
+    set(s(9),'Position',[0.67 0.07 0.25 0.23])
+    clear bb mm
 end
 clear nn bb
 
