@@ -6,18 +6,19 @@
 %T. Pugh
 %25.11.19
 
-load obs_NPP_0perc.mat
-load obs_Cveg_0perc.mat
+%Location of *.mat files containing preprocessed observational data
+data_obs='/Users/pughtam/Documents/GAP_and_other_work/Mortality/Tim_Dec_plots/raw_data/raw_data_v2/';
+%Location of netcdf files containing closed canopy forest mask
+data_mask='/Users/pughtam/data/turnover/';
 
-%Get the forest area
+%---
+load([data_obs,'obs_NPP_0perc.mat']);
+load([data_obs,'obs_Cveg_0perc.mat']);
+
+%Read year 2000 closed-canopy forest mask derived from Hansen et al. (2013) data (Pugh et al, 2019, Nature Geoscience 12, 730-735)
+[fmask,~,ffrac,~]=get_closed_can_mask(data_mask);
+
 garea=global_grid_area();
-ffrac=ncread('/Users/pughtam/Documents/GAP_and_other_work/Mortality/hansen_forested_frac_05.nc4','forested_50_percent');
-ffrac=(double(ffrac)/100);
-%Make a mask to exclude all grid cells with less than 10% closed-canopy
-%forest cover to avoid results being biased by cells with almost no
-%closed-canopy forest (although effect is very minimal)
-fmask=NaN(size(ffrac));
-fmask(ffrac>=0.1)=1;
 
 farea=ffrac.*garea'.*fmask;
 
@@ -25,15 +26,10 @@ farea=ffrac.*garea'.*fmask;
 Cveg_farea=Cveg.*garea'; %Multiply by total grid-cell area, as the Cveg data is a biomass density per grid cell and we are making assumption that biomass outside closed-canopy forests is negligible
 NPP_farea=NPP.*farea; %Multiply by closed-canopy forest area only. We are assuming that NPP is uniform across the grid cell and we only want the component relating to closed-canopy forests
 
-Cveg_farea_tot=nansum(Cveg_farea(:))/1e12;
-NPP_farea_tot=nansum(NPP_farea(:))/1e12;
+Cveg_farea_tot=nansum(Cveg_farea(:))/1e12; %Pg C
+NPP_farea_tot=nansum(NPP_farea(:))/1e12; %Pg C y-1
+tau_NPP=Cveg_farea_tot./NPP_farea_tot; %years
 
-%Calculate a Cveg value assuming that the whole grid cell is closed canopy
-%forest. Implicity assumes that biomass outside closed-canopy forests is
-%negligible
-Cveg_pot=Cveg./ffrac;
-tau_NPP=Cveg_pot./NPP;
-
-%Calculate a global turnover time mean weighted by closed-canopy forest
-%area in each grid cell.
-tau_NPP_farea_mean=nansum(tau_NPP(:).*farea(:))/nansum(farea(:));
+fprintf('Cveg %7.1f\n',Cveg_farea_tot)
+fprintf('NPP %7.1f\n',NPP_farea_tot)
+fprintf('tau_NPP %7.1f\n',tau_NPP)
