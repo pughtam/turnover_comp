@@ -8,8 +8,14 @@
 %T. Pugh
 %27.11.19
 
-lai_dir='/data/turnover/masks/phen/multiple_variables_files/';
+%Location of LAI data
+lai_dir='/Users/pughtam//data/turnover/masks/phen/multiple_variables_files/';
+%Location of *.mat files containing preprocessed ESA landcover data
+data_esa='/Users/pughtam/data/ESA_landcover/';
+%Location of netcdf files containing closed canopy forest mask
+data_mask='/Users/pughtam/data/turnover/';
 
+%---
 models={'(a) CABLE-POP','(b) JULES','(c) LPJ-GUESS','(d) LPJmL','(e) ORCHIDEE','(f) SEIB-DGVM'};
 nmod=length(models);
 
@@ -36,10 +42,10 @@ lai_jules(1:96,29:140)=lai_julesa(:,97:192)';
 lai_jules(97:192,29:140)=lai_julesa(:,1:96)';
 
 %Load water mask data (from ESA landcover)
-load /data/ESA_landcover/esa_05_landcover %Output from esa_lu_read.m
+load([data_esa,'esa_05_landcover.mat']); %Output from esa_lu_read.m
 oceanm=NaN(720,360);
 oceanm(esa_05'>200 & esa_05'<220)=-1;
-load /data/ESA_landcover/esa_jules_landcover %Output from esa_lu_read_julesgrid.m
+load([data_esa,'esa_jules_landcover']); %Output from esa_lu_read_julesgrid.m
 oceanm_jules=NaN(192,144);
 oceanm_jules(esa_jules'>200 & esa_jules'<220)=-1;
 
@@ -50,7 +56,6 @@ lats_jules=-90+(latincj/2):latincj:90-(latincj/2);
 lons_jules=-179.0625:1.875:179.0625;
 
 %Read year 2000 closed-canopy forest mask derived from Hansen et al. (2013) data (Pugh et al, 2019, Nature Geoscience 12, 730-735)
-data_mask='/data/turnover/';
 [fmask,fmask_jules,~,~]=get_closed_can_mask(data_mask);
 
 %Colourbar range

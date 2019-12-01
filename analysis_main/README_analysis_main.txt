@@ -17,6 +17,10 @@ Additional dependencies required from elsewhere
 
 The following scripts are used to produce the indicated plots
 
+global_turn_table.m
+global_obs_totals.m
+Table 3
+
 global_turn_frac_map.m
 Fig. 2
 Fig. S3

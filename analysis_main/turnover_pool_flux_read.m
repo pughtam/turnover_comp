@@ -100,6 +100,7 @@ fmask_jules(97:192,:)=fmask_jules_in(1:96,:);
 %Set some constants
 sec_per_day=86400;
 kg_per_Pg=1e12;
+g_per_Pg=1e15;
 days_per_year=365;
 days_per_year_jules=360; %Only 360 days per year in JULES
 
@@ -603,13 +604,13 @@ end
 %Make global sums
 cwood(:,iorchidee)=nansum(nansum(cwood_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)/kg_per_Pg; %Give number in Pg C
 cleaf(:,iorchidee)=nansum(nansum(cleaf_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)/kg_per_Pg; %Give number in Pg C
-croot(:,iorchidee)=nansum(nansum(croot_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)/kg_per_Pg; %Give number in Pg C
+croot(:,iorchidee)=nansum(nansum(croot_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)/g_per_Pg; %Give number in Pg C
 cveg(:,iorchidee)=nansum(nansum(cveg_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)/kg_per_Pg; %Give number in Pg C
 csoil(:,iorchidee)=nansum(nansum(csoil_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)/kg_per_Pg; %Give number in Pg C
 
-tleaf(:,iorchidee)=nansum(nansum(tleaf_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)*days_per_year/1e15; %Give number in Pg C a-1
-troot(:,iorchidee)=nansum(nansum(troot_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)*days_per_year/1e15; %Give number in Pg C a-1
-tmort(:,iorchidee)=nansum(nansum(tmort_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)*days_per_year/1e15; %Give number in Pg C a-1
+tleaf(:,iorchidee)=nansum(nansum(tleaf_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)*days_per_year/g_per_Pg; %Give number in Pg C a-1
+troot(:,iorchidee)=nansum(nansum(troot_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)*days_per_year/g_per_Pg; %Give number in Pg C a-1
+tmort(:,iorchidee)=nansum(nansum(tmort_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)*days_per_year/g_per_Pg; %Give number in Pg C a-1
 
 npp(:,iorchidee)=nansum(nansum(npp_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)*sec_per_day*days_per_year/kg_per_Pg; %Give number in Pg C a-1
 gpp(:,iorchidee)=nansum(nansum(gpp_orchidee.*repmat(fliplr(area_05),[1 1 nyear]),2),1)*sec_per_day*days_per_year/kg_per_Pg; %Give number in Pg C a-1

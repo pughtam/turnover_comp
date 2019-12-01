@@ -6,7 +6,8 @@
 %T. Pugh
 %28.11.19
 
-data_models='/media/pughtam/rds-2017-pughtam-01/turnover/turnover_comp/data_analysis/'; %Location of *.mat files containing preprocessed model data
+%Location of *.mat files containing preprocessed model data
+data_models='/Users/pughtam/Documents/GAP_and_other_work/Mortality/mat_files/';
 
 %---
 %Some generic settings
@@ -24,7 +25,7 @@ y2_cn=114; %2014
 
 %Load the globally averaged CRU-NCEP data from *.mat file created by turnover_pool_flux_read.m
 load([data_models,'all_cruncep_global_arrays']);
-models={'LPJ-GUESS','LPJmL','SEIB-DGVM','JULES','CABLE-POP','ORCHIDEE'};
+
 %Make reproduction flux array (none for JULES or CABLE)
 repro=NaN(size(npp));
 repro(:,1:3)=npp(:,1:3)*0.1;
@@ -64,7 +65,7 @@ set(gca,'XTickLabel','')
 %Now do the calculations for IPSL
 
 %Load the globally averaged IPSL data from *.mat file created by turnover_pool_flux_read.m
-load all_ipsl_global_arrays
+load([data_models,'all_ipsl_global_arrays']);
 
 %Make reproduction flux array (none for JULES or CABLE)
 repro=NaN(size(npp));

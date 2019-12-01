@@ -10,11 +10,11 @@
 fthres=0.1; %Fractional forest cover threshold for comparison with observations
 
 %Location of netcdf files containing preprocessed forest mask data for the models
-mask_dir='/data/turnover/masks/v4/';
+mask_dir='/Users/pughtam/data/turnover/masks/v4/';
 %Location of *.mat files containing preprocessed ESA landcover data
-data_esa='/data/ESA_landcover/';
+data_esa='/Users/pughtam/data/ESA_landcover/';
 %Location of netcdf files containing closed canopy forest mask
-data_mask='/data/turnover/';
+data_mask='/Users/pughtam/data/turnover/';
 
 %---
 models={'(a) CABLE-POP','(b) JULES','(c) LPJ-GUESS','(d) LPJmL','(e) ORCHIDEE','(f) SEIB-DGVM',};

@@ -8,11 +8,11 @@
 %28.11.19
 
 %Location of *.mat files containing preprocessed model data
-data_models='/data/turnover/';
+data_models='/Users/pughtam/Documents/GAP_and_other_work/Mortality/mat_files/';
 %Location of *.mat files containing preprocessed ESA landcover data
-data_esa='/data/ESA_landcover/';
+data_esa='/Users/pughtam/data/ESA_landcover/';
 %Location of netcdf files containing closed canopy forest mask
-data_mask='/data/turnover/';
+data_mask='/Users/pughtam/data/turnover/';
 
 %---
 

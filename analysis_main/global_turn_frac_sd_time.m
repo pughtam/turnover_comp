@@ -1,5 +1,5 @@
 function [lrrflux_mask_std_mean,mflux_mask_std_mean,lrrflux_mask_std_mean_biom,...
-    mflux_mask_std_mean_biom,phen_label,nphen]=global_turn_frac_sd_time(makeplots)
+    mflux_mask_std_mean_biom,phen_label,nphen]=global_turn_frac_sd_time(makeplots,data_models,data_mask,data_phen)
 %Script to make bar plots of standard deviation of turnover flux from phenology and
 %mortality in space.
 %
@@ -17,7 +17,6 @@ y2=199; %2099
 
 %Load in the pre-processed model data
 ifcruncep=false; %IPSL data
-data_models='/media/pughtam/rds-2017-pughtam-01/turnover/turnover_comp/data_analysis/';
 [~,mflux,lrrflux,~,reproflux,~,mflux_jules,lrrflux_jules,...
     ~,models,nmod]=get_stocks_fluxes_runmeanstd(data_models,ifcruncep,y1,y2);
 
@@ -25,7 +24,6 @@ data_models='/media/pughtam/rds-2017-pughtam-01/turnover/turnover_comp/data_anal
 %Make plots
 
 %Read year 2000 closed-canopy forest mask derived from Hansen et al. (2013) data (Pugh et al, 2019, Nature Geoscience 12, 730-735)
-data_mask='/data/turnover/';
 [fmask,fmask_jules,~,~]=get_closed_can_mask(data_mask);
 
 %Mask data by closed-canopy forest cover (10% threshold per grid cell)
@@ -53,8 +51,7 @@ clear mm
 
 %Calculate values per model forest type
 %Forest type files calculated using scripts in 'model_masks' directory
-phen_dir='/data/turnover/masks/phen/';
-[phen,phen_jules,phen_label,nphen]=get_forest_type(phen_dir);
+[phen,phen_jules,phen_label,nphen]=get_forest_type(data_phen);
 
 lrrflux_mask_std_mean_biom=NaN(nmod,nphen);
 mflux_mask_std_mean_biom=NaN(nmod,nphen);

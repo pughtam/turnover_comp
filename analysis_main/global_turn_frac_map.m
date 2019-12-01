@@ -1,4 +1,4 @@
-%Make global maps of the fraction of turnover which results from mortality
+%Make global maps of various productivity and turnover-related variables
 %
 %Requires *.mat files of preprocessed model data from turnover_pool_flux_read.m
 %Requires *mat files of preprocessed observational data (see notes in global_obs_totals.m)
@@ -10,8 +10,16 @@
 %T. Pugh
 %27.11.19
 
-data_models='/data/turnover/'; %Location of *.mat files containing preprocessed model data
-data_obs='/data/turnover/tim_obs_data/'; %Location of *.mat files containing preprocessed observational data
+%Location of *.mat files containing preprocessed model data
+data_models='/Users/pughtam/Documents/GAP_and_other_work/Mortality/mat_files/';
+%Location of *.mat files containing preprocessed observational data
+data_obs='/Users/pughtam/Documents/GAP_and_other_work/Mortality/Tim_Dec_plots/raw_data/raw_data_v2/';
+%Location of netcdf files containing closed canopy forest mask
+data_mask='/Users/pughtam/data/turnover/';
+%Path to file containing grid cell areas for JULES (m2)
+jules_gridcellarea_file='/data/turnover/JULES/JULES-LandMask.nc';
+%Location of *.mat files containing preprocessed ESA landcover data
+data_esa='/Users/pughtam/data/ESA_landcover/';
 
 %Choose which variables to plot. 
 %1=Vegetation carbon stock
@@ -22,7 +30,7 @@ data_obs='/data/turnover/tim_obs_data/'; %Location of *.mat files containing pre
 %6=Ratio of tau_turn to tau_NPP (%)
 plotvar=5;
 
-inc_obs=true; %Also include observational data? (only for NPP, tau_turn, Cveg)
+inc_obs=false; %Also include observational data? (only for NPP, tau_turn, Cveg)
 
 %Index of first and last year to average over in the data
 y1=85; %1985
@@ -37,9 +45,9 @@ end
 %Load in the pre-processed model data
 
 ifcruncep=true;
-data_models='/media/pughtam/rds-2017-pughtam-01/turnover/turnover_comp/data_analysis/';
-[vstock,mflux,lrflux,nppflux,reproflux,vstock_jules,mflux_jules,lrflux_jules,...
-    nppflux_jules,models,nmod]=get_stocks_fluxes(data_models,ifcruncep,y1,y2);
+[vstock,mflux,lrflux,nppflux,reproflux,rflux,vstockr,...
+    vstock_jules,mflux_jules,lrflux_jules,nppflux_jules,rflux_jules,vstockr_jules,models,nmod]...
+    =get_stocks_fluxes(data_models,ifcruncep,y1,y2);
 
 %---
 %If necessary, read in the observational data
@@ -52,6 +60,10 @@ if (plotvar==1 || plotvar==3 || plotvar==5)
 end
 
 %---
+%Read year 2000 closed-canopy forest mask derived from Hansen et al. (2013) data (Pugh et al, 2019, Nature Geoscience 12, 730-735)
+[fmask,fmask_jules,ffrac,ffrac_jules]=get_closed_can_mask(data_mask);
+
+%---
 %Make plots
 
 lats=-89.75:0.5:89.75;
@@ -61,16 +73,12 @@ lats_jules=-90+(latincj/2):latincj:90-(latincj/2);
 lons_jules=-179.0625:1.875:179.0625;
 
 %Load water mask data (from ESA landcover)
-load /data/ESA_landcover/esa_05_landcover.mat %Output from esa_lu_read.m
+load([data_esa,'esa_05_landcover.mat']); %Output from esa_lu_read.m
 oceanm=NaN(720,360);
 oceanm(esa_05'>200 & esa_05'<220)=-1;
-load /data/ESA_landcover/esa_jules_landcover.mat %Output from esa_lu_read_julesgrid.m
+load([data_esa,'esa_jules_landcover.mat']); %Output from esa_lu_read_julesgrid.m
 oceanm_jules=NaN(192,144);
 oceanm_jules(esa_jules'>200 & esa_jules'<220)=-1;
-
-%Read year 2000 closed-canopy forest mask derived from Hansen et al. (2013) data (Pugh et al, 2019, Nature Geoscience 12, 730-735)
-data_mask='/data/turnover/';
-[fmask,fmask_jules,~,~]=get_closed_can_mask(data_mask);
 
 %Choose data to plot
 if plotvar==1
