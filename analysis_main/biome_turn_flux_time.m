@@ -231,6 +231,7 @@ clear nn yy
 
 %Read forest type data based on ESA landcover (mask produced in Pugh et al., 2019, PNAS 116(19), 4382-4387 
 %and available in the SI of that paper as an ACSII file)
+%Produced here using esa_forest_9regions_new_func.m
 phen_dir='/data/turnover/masks/phen/';
 phen=NaN(360,720,nmod);
 ESA_phen=ncread([phen_dir,'ESA_forest_9regions_v2.nc'],'region_mask')';

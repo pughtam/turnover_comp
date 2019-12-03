@@ -3,10 +3,6 @@
 %Requires *.mat files of preprocessed model data from turnover_pool_flux_read.m
 %Requires *mat files of preprocessed observational data (see notes in global_obs_totals.m)
 %
-%Dependencies
-%-esa_lu_read.m
-%-esa_lu_read_julesgrid.m
-%
 %T. Pugh
 %27.11.19
 
@@ -73,10 +69,10 @@ lats_jules=-90+(latincj/2):latincj:90-(latincj/2);
 lons_jules=-179.0625:1.875:179.0625;
 
 %Load water mask data (from ESA landcover)
-load([data_esa,'esa_05_landcover.mat']); %Output from esa_lu_read.m
+load([data_esa,'esa_05_landcover.mat']); %Output from esa_hires_region_mask.m	
 oceanm=NaN(720,360);
 oceanm(esa_05'>200 & esa_05'<220)=-1;
-load([data_esa,'esa_jules_landcover.mat']); %Output from esa_lu_read_julesgrid.m
+load([data_esa,'esa_jules_landcover.mat']); %Output from esa_hires_region_mask_jules.m	
 oceanm_jules=NaN(192,144);
 oceanm_jules(esa_jules'>200 & esa_jules'<220)=-1;
 

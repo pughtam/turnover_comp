@@ -42,10 +42,10 @@ lai_jules(1:96,29:140)=lai_julesa(:,97:192)';
 lai_jules(97:192,29:140)=lai_julesa(:,1:96)';
 
 %Load water mask data (from ESA landcover)
-load([data_esa,'esa_05_landcover.mat']); %Output from esa_lu_read.m
+load([data_esa,'esa_05_landcover.mat']); %Output from esa_hires_region_mask.m
 oceanm=NaN(720,360);
 oceanm(esa_05'>200 & esa_05'<220)=-1;
-load([data_esa,'esa_jules_landcover']); %Output from esa_lu_read_julesgrid.m
+load([data_esa,'esa_jules_landcover']); %Output from esa_hires_region_mask_jules.m	
 oceanm_jules=NaN(192,144);
 oceanm_jules(esa_jules'>200 & esa_jules'<220)=-1;
 

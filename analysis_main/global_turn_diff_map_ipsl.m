@@ -63,10 +63,10 @@ diff_tau_mort_jules=((tau_mort_jules_fut./tau_mort_jules_base)-1)*100;
 %Make plots
 
 %Load water mask data (from ESA landcover)
-load([data_esa,'esa_05_landcover']); %Output from esa_lu_read.m
+load([data_esa,'esa_05_landcover']); %Output from esa_hires_region_mask.m	
 oceanm=NaN(720,360);
 oceanm(esa_05'>200 & esa_05'<220)=-1000;
-load([data_esa,'esa_jules_landcover']); %Output from esa_lu_read_julesgrid.m
+load([data_esa,'esa_jules_landcover']); %Output from esa_hires_region_mask_jules.m	
 oceanm_jules=NaN(192,144);
 oceanm_jules(esa_jules'>200 & esa_jules'<220)=-1000;
 
