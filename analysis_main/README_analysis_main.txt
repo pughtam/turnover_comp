@@ -6,11 +6,14 @@ Basic data processing to read in model data from netcdfs, calculate global stati
 
 Helper functions for data processing. See file headers for details.
 - global_grid_area.m
-- esa_05_landcover.m
-- esa_jules_landcover.m
 - get_forest_type.m
 - get_stocks_fluxes.m
 - get_closed_can_mask.m
+
+Functions to process ESA landcover data
+- esa_hires_region_mask.m
+- esa_hires_region_mask_jules.m
+- esa_forest_9regions_new_func.m
 
 Additional dependencies required from elsewhere
 - hansen_forest_frac_0p5deg.nc4 (available from doi: 10.18161/disturbance_forestmask.201905)
