@@ -1,7 +1,9 @@
-%Script to make maps of forest type for the CRU-NCEP simulations based on masks created using scripts in
-%"forest_masks" directory (by Sarah Shafer) 
+%Script to make maps of forest type for the CRU-NCEP simulation
 %
-%The indexes to the forest-types are as follows:
+%Forest cover is read from mask files calculated using scripts in 'model_masks' directory 
+%(provided by Sarah Shafer)
+%
+%The indexes in the forest-type files are as follows:
 %1=needleleaved evergreen, 
 %2=needleleaved deciduous, 
 %3=boreal broadleaved deciduous, 
@@ -13,31 +15,29 @@
 %T. Pugh
 %22.02.18
 
-%Location of forest mask files created using file in folder "forest_masks"
+%Location of netcdf files containing preprocessed forest type data for the models
 phen_dir='/data/turnover/masks/phen/';
-%Location of netcdf files containing closed canopy forest mask
-data_mask='/Users/pughtam/data/turnover/';
 %Location of *.mat files containing preprocessed ESA landcover data
-data_esa='/Users/pughtam/data/ESA_landcover/';
+data_esa='/data/ESA_landcover/';
+%Location of netcdf files containing closed canopy forest mask
+data_mask='/data/turnover/';
 
 %---
 phen_label={'needleleaved evergreen','needleleaved deciduous','boreal broadleaved deciduous',...
     'temperate broadleaved evergreen','temperate broadleaved deciduous','tropical broadleaved evergreen',...
-    'tropical broadleaved raingreen'};
+    'tropical broadleaved deciduous'};
 
-models={'(a) CABLE-POP','(b) JULES','(c) LPJ-GUESS','(d) LPJmL','(e) LPJ-wsl','(f) ORCHIDEE','(g) SEIB-DGVM'};
+models={'(a) CABLE-POP','(b) JULES','(c) LPJ-GUESS','(d) LPJmL','(e) ORCHIDEE','(f) SEIB-DGVM'};
 nmod=length(models);
 
 phen=NaN(360,720,nmod);
 
-%Load in the forest mask files
 phen(:,:,1)=flipud(ncread([phen_dir,'/CABLE-POP_cruncep_lai_annual_1901_2015_phenology_mask.nc'],'phen_max_lai_phen_number')');
 phen_julesa=ncread([phen_dir,'/JULESC2_cruncep_lai_annual_1901_2014_phenology_mask.nc'],'phen_max_lai_phen_number')';
 phen(:,:,3)=ncread([phen_dir,'/lpj-guess_cruncep_lai_annual_1901_2014_phenology_mask.nc'],'phen_max_lai_phen_number')';
 phen(69:347,:,4)=ncread([phen_dir,'/lpjml_cruncep_lai_annual_1901_2014_phenology_mask.nc'],'phen_max_lai_phen_number')';
-phen(:,:,5)=flipud(ncread([phen_dir,'/lpj-wsl_cruncep_lai_annual_1901_2014_phenology_mask.nc'],'phen_max_lai_phen_number')');
-phen(:,:,6)=flipud(ncread([phen_dir,'/ORCHIDEE_cruncep_lai_annual_1901_2014_phenology_mask.nc'],'phen_max_lai_phen_number')');
-phen(:,:,7)=flipud(ncread([phen_dir,'/seib_cruncep_lai_annual_1901_2014_phenology_mask.nc'],'phen_max_lai_phen_number')');
+phen(:,:,5)=flipud(ncread([phen_dir,'/ORCHIDEE_cruncep_lai_annual_1901_2014_phenology_mask.nc'],'phen_max_lai_phen_number')');
+phen(:,:,6)=flipud(ncread([phen_dir,'/seib_cruncep_lai_annual_1901_2014_phenology_mask.nc'],'phen_max_lai_phen_number')');
 
 phen_jules=NaN(192,144);
 phen_jules(1:96,29:140)=phen_julesa(:,97:192)';
@@ -51,6 +51,7 @@ load([data_esa,'esa_jules_landcover']); %Output from esa_hires_region_mask_jules
 oceanm_jules=NaN(192,144);
 oceanm_jules(esa_jules'>200 & esa_jules'<220)=-1;
 
+%Lat and lon arrays for plotting
 lats=-89.75:0.5:89.75;
 lons=-179.75:0.5:179.75;
 latincj=180/144;
@@ -60,18 +61,17 @@ lons_jules=-179.0625:1.875:179.0625;
 %Read year 2000 closed-canopy forest mask derived from Hansen et al. (2013) data (Pugh et al, 2019, Nature Geoscience 12, 730-735)
 [fmask,fmask_jules,~,~]=get_closed_can_mask(data_mask);
 
-%Set limits for colourbar
+%Set colorbar limits
 cmin=1;
 cmax=8;
 
-%Make the figure
 figure
 cmap=colormap(parula(7));
 cmap=[0.9 0.9 0.9; cmap];
 colormap(cmap)
 for nn=1:nmod
     if nn==2; continue; end %JULES is a special case because of resolution
-    s(nn)=subplot(4,2,nn);
+    s(nn)=subplot(3,2,nn);
     hold on
     l(nn)=pcolor(lons,lats,oceanm');
     set(l(nn),'linestyle','none')
@@ -93,7 +93,7 @@ set(c1,'Location','eastoutside')
 set(c1,'Ticks',1.5:1:8,'TickLabels',phen_label)
 
 %JULES is a special case because of resolution
-s(2)=subplot(4,2,2);
+s(2)=subplot(3,2,2);
 hold on
 l(2)=pcolor(lons_jules,lats_jules,oceanm_jules');
 set(l(2),'linestyle','none')
@@ -114,4 +114,4 @@ set(s(3),'Position',[0.05 0.53 0.44 0.22])
 set(s(4),'Position',[0.51 0.53 0.44 0.22])
 set(s(5),'Position',[0.05 0.30 0.44 0.22])
 set(s(6),'Position',[0.51 0.30 0.44 0.22])
-set(s(7),'Position',[0.05 0.07 0.44 0.22])
+set(c1,'Position',[0.46 0.07 0.03 0.22])

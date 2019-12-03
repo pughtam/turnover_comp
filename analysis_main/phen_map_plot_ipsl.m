@@ -17,10 +17,6 @@
 
 %Location of forest mask files created using file in folder "forest_masks"
 phen_dir='/data/turnover/';
-%Location of netcdf files containing closed canopy forest mask
-data_mask='/Users/pughtam/data/turnover/';
-%Location of *.mat files containing preprocessed ESA landcover data
-data_esa='/Users/pughtam/data/ESA_landcover/';
 
 %Sub-paths for the individual LAI files
 lai_file_cable='CABLE/IPSL_v2/CABLE-POP_ipsl-cm5a-lr_lai_month_1901_2099.nc4';
