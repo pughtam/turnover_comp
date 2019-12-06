@@ -1,22 +1,38 @@
 #========================================================================================
 # Read JULES Cveg and mortality to calculate the actual turnover. The mortality
-# components are all explained in README_totalmortflux.txt.
+# components are all explained in README_totalmortflux.txt
 #----------------------------------------------------------------------------------------
 
-# Read JULES forest mask
+# Load dependencies
 #----------------------------------------------------------------------------------------
-JULES_forest_mask <- array (NA, dim = c (192, 112+29+4))
-nc_name <- 'Shared_files/forest_mask/JULESC2_cruncep_lai_annual_1901_2014_forest_mask_v4.nc'
+if (!exists ('nc_open',   mode = 'function')) library (ncdf4)
+
+# Threshold for the forest cover
+#----------------------------------------------------------------------------------------
+threshold <- 10.0
+
+# Read the forest mask
+#----------------------------------------------------------------------------------------
+nc_name <- 'hansen_forested_frac_julesgrid.nc4'
+ncin <-  nc_open (nc_name)
+forest_mask_julesgrid <- ncvar_get (ncin, 'forested_50_percent')
+forest_mask_julesgrid_NA <- forest_mask_julesgrid [, length (forest_mask_julesgrid [1, ]):1]
+forest_mask_julesgrid_NA [forest_mask_julesgrid_NA < threshold] <- NA
+
+# Read forest mask
+#----------------------------------------------------------------------------------------
+JULES_forest_mask    <- array (NA, dim = c (192, 112+29+4))
+nc_name <- 'JULESC2_cruncep_lai_annual_1901_2014_forest_mask_v4.nc'
 ncin <-  nc_open (nc_name)
 tmp.array1 <- ncvar_get (ncin, 'forest_30yr_any_10_years')
 tmp.array2 <- cbind (matrix (rep (NA, 192 * 29), nrow = 192), rbind (tmp.array1 [97:192, ], tmp.array1 [1:96, ]), matrix (rep (NA, 192 * 4), nrow = 192))
 JULES_forest_mask <- tmp.array2
 JULES_forest_mask [JULES_forest_mask == 2] <- NA
 
-# Read JULES phenology mask
+# Read phenology mask
 #----------------------------------------------------------------------------------------
 JULES_pheno_mask  <- array (NA, dim = c (720, 360))
-nc_name <- 'Shared_files/phenology/JULESC2_cruncep_lai_annual_1901_2014_phenology_mask.nc'
+nc_name <- 'JULESC2_cruncep_lai_annual_1901_2014_phenology_mask.nc'
 ncin <-  nc_open (nc_name)
 tmp.array1       <- ncvar_get (ncin, 'phen_max_lai_phen_number')
 JULES_pheno_mask <- cbind (matrix (rep (NA, 192 * 29), nrow = 192), rbind (tmp.array1 [97:192, ], tmp.array1 [1:96, ]), matrix (rep (NA, 192 * 4), nrow = 192))
@@ -24,7 +40,7 @@ JULES_pheno_mask <- cbind (matrix (rep (NA, 192 * 29), nrow = 192), rbind (tmp.a
 # Read CRUN Cveg layer
 #----------------------------------------------------------------------------------------
 JULES_CRUN_Cveg <- array (NA, dim = c (192, 112+29+4))
-nc_name  <- 'data/JULES/cruncep/JULESC2_CRUNCEP_cveg_gb_Annual_1901_2014.nc'
+nc_name  <- 'JULESC2_CRUNCEP_cveg_gb_Annual_1901_2014.nc'
 ncin <-  nc_open (nc_name)
 tmp.array <- ncvar_get (ncin, 'cveg_gb', start =  c (1, 1, 85), count = c (192, 112, 30)) # Extract variable
 tmp.array1 <- apply (tmp.array, c (1, 2), mean, na.rm = T) # Calculate mean over the 
@@ -38,25 +54,25 @@ JULES_CRUN_mort <- array (NA, dim = c (192, 112+29+4))
 
 # Get wood_litC [kg m-2 s-1]
 #----------------------------------------------------------------------------------------
-nc_name  <- 'data/JULES/cruncep2/JULESC2_CRUNCEP_wood_litC_Monthly_1901_2014.nc'
+nc_name <- 'JULESC2_CRUNCEP_wood_litC_Monthly_1901_2014.nc'
 ncin <-  nc_open (nc_name)
 tmp <- ncvar_get (ncin, 'wood_litC', start =  c (1, 1, 1, 85*12+1), count = c (192, 112, 9, 12*29)) # Extract variable
 
 # Get lit_C_dyn_wood [kg m-2 s-1]
 #----------------------------------------------------------------------------------------
-nc_name  <- 'data/JULES/cruncep2/JULESC2_CRUNCEP_lit_c_dyn_wood_Monthly_1901_2014.nc'
+nc_name <- 'JULESC2_CRUNCEP_lit_c_dyn_wood_Monthly_1901_2014.nc'
 ncin <-  nc_open (nc_name)
 tmp1 <- ncvar_get (ncin, 'lit_c_dyn_wood', start =  c (1, 1, 1, 85*12+1), count = c (192, 112, 9, 12*29)) # Extract variable
 
 # Get lit_C_dyn_leaf [kg m-2 s-1]
 #----------------------------------------------------------------------------------------
-nc_name  <- 'data/JULES/cruncep2/JULESC2_CRUNCEP_lit_c_dyn_leaf_Monthly_1901_2014.nc'
+nc_name <- 'JULESC2_CRUNCEP_lit_c_dyn_leaf_Monthly_1901_2014.nc'
 ncin <-  nc_open (nc_name)
 tmp2 <- ncvar_get (ncin, 'lit_c_dyn_leaf', start =  c (1, 1, 1, 85*12+1), count = c (192, 112, 9, 12*29)) # Extract variable
 
 # Get lit_C_dyn_root [kg m-2 s-1]
 #----------------------------------------------------------------------------------------
-nc_name  <- 'data/JULES/cruncep2/JULESC2_CRUNCEP_lit_c_dyn_root_Monthly_1901_2014.nc'
+nc_name  <- 'JULESC2_CRUNCEP_lit_c_dyn_root_Monthly_1901_2014.nc'
 ncin <-  nc_open (nc_name)
 tmp3 <- ncvar_get (ncin, 'lit_c_dyn_root', start =  c (1, 1, 1, 85*12+1), count = c (192, 112, 9, 12*29)) # Extract variable
 
@@ -86,9 +102,4 @@ rm (tmp.array2)
 #----------------------------------------------------------------------------------------
 JULES_CRUN_tau <- JULES_CRUN_Cveg / JULES_CRUN_mort
 JULES_CRUN_tau [is.na (JULES_forest_mask) | JULES_forest_mask == 2] <- NA
-
-# Weight residence time by forest fraction
-#----------------------------------------------------------------------------------------
-JULES_CRUN_tau_adj <- JULES_CRUN_tau * (forest_mask_julesgrid_NA / 100.0)
-
 #========================================================================================
