@@ -4,7 +4,7 @@ Thomas A. M. Pugh, Tim T. Rademacher, Sarah L. Shafer, Jörg Steinkamp, Jonathan
 For queries, contact Thomas A. M. Pugh, t.a.m.pugh@bham.ac.uk
 
 Scripts are organised into 4 folders:
-1) model_processing - scripts for preprocessing raw model output. For instance, aggregating monthly outputs to annual (author: T. A. M. Pugh)
+1) data_conversion - scripts for preprocessing raw model output, by aggregating monthly outputs to annual (author: T. A. M. Pugh)
 2) forest_masks - scripts for creating forest cover and forsst type masks for each model (author: S. L. Shafer)
 3) analysis_main - majority of scripts underlying figures in manuscript (author: T. A. M. Pugh)
 4) analysis_kernels - scripts for creating density kernels and observational estimates of turnover time (author: T. T. Rademacher)
