@@ -19,7 +19,7 @@ y2=114; %2014
 
 %Load in the pre-processed model data
 ifcruncep=true;
-[~,mflux,lrflux,~,reproflux,~,~,~,mflux_jules,lrflux_jules,~,~,...
+[~,mflux,lrflux,~,reproflux,~,mflux_jules,lrflux_jules,...
     ~,models,nmod]=get_stocks_fluxes(data_models,ifcruncep,y1,y2);
 
 lrrflux=nansum(cat(4,lrflux,reproflux),4);
