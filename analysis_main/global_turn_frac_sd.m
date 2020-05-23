@@ -1,5 +1,3 @@
-function [lrrflux_mask_std,mflux_mask_std,lrrflux_mask_std_biom,mflux_mask_std_biom,...
-    phen_label,nphen]=global_turn_frac_sd(makeplots,data_models,data_mask,data_phen)
 %Script to make bar plots of standard deviation of turnover flux from phenology and
 %mortality in space.
 %
@@ -11,6 +9,16 @@ function [lrrflux_mask_std,mflux_mask_std,lrrflux_mask_std_biom,mflux_mask_std_b
 %T. Pugh
 %23.02.18
 
+makeadditonalplots=false; %Make a set of additional diagnostic plots not included in the manuscript
+
+%Location of *.mat files containing preprocessed model data
+data_models='/Users/pughtam/Documents/GAP_and_other_work/Mortality/mat_files/';
+%Location of netcdf files containing closed canopy forest mask
+data_mask='/Users/pughtam/data/turnover/';
+%Forest type files calculated using scripts in 'model_masks' directory
+data_phen='/data/turnover/masks/phen/';
+
+%---
 modelslabel={'CABLE-POP','JULES','LPJ-GUESS','LPJmL','ORCHIDEE','SEIB-DGVM'};
 
 %Index of first and last year to average over in the data
@@ -19,7 +27,7 @@ y2=114; %2014
 
 %Load in the pre-processed model data
 ifcruncep=true;
-[~,mflux,lrflux,~,reproflux,~,mflux_jules,lrflux_jules,...
+[vstock,mflux,lrflux,~,reproflux,vstock_jules,mflux_jules,lrflux_jules,...
     ~,models,nmod]=get_stocks_fluxes(data_models,ifcruncep,y1,y2);
 
 lrrflux=nansum(cat(4,lrflux,reproflux),4);
@@ -95,7 +103,16 @@ mflux_mask_std_biom_acrossbiom=nanstd(mflux_mask_mean_biom,[],2);
 
 %---
 %Make plots
-if makeplots
+
+%Within versus across forest-type bar chart
+figure
+bararray=cat(2,mflux_mask_std_biom_withinbiom,mflux_mask_std_biom_acrossbiom,lrrflux_mask_std_biom_withinbiom,lrrflux_mask_std_biom_acrossbiom);
+bar(bararray)
+set(gca,'XTickLabel',modelslabel)
+legend('Mortality (within forest type)','Mortality (across forest types)','Phenology (within forest type)','Phenology (across forest types)')
+ylabel('\sigma_{space} (kg C m^{-2} a^{-1})')
+    
+if makeadditonalplots
     
     %Global bar chart
     figure
@@ -125,13 +142,4 @@ if makeplots
     end
     clear mm
     legend(phen_label)
-    
-    %Within versus across forest-type bar chart
-    figure
-    bararray=cat(2,mflux_mask_std_biom_withinbiom,mflux_mask_std_biom_acrossbiom,lrrflux_mask_std_biom_withinbiom,lrrflux_mask_std_biom_acrossbiom);
-    bar(bararray)
-    set(gca,'XTickLabel',modelslabel)
-    legend('Mortality (within forest type)','Mortality (across forest types)','Phenology (within forest type)','Phenology (across forest types)')
-    ylabel('\sigma_{space} (kg C m^{-2} a^{-1})')
-    
 end
