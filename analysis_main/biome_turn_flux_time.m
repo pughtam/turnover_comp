@@ -367,3 +367,103 @@ for nn=1:nmod %Make one plot per model
 end
 clear nn bb
 
+%Plot just the needleleaf evergreen and tropical broadleaf forest types in individual figures
+
+%Tropical broadleaf
+bb=1;
+figure
+colormap(lines(5))
+for nn=1:nmod %Make one plot per model
+    s(nn)=subplot(2,3,nn);
+    hold on
+    firstyear=1900+y1+15; %Only plot from 15 years into the dataset because using running mean
+    lastyear=1900+y2-15;
+    
+    %Temporary running mean variables
+    distflux_runmean=runmean(distflux_mask_mean(nn,:,bb),15);
+    vitalflux_runmean=runmean(vitalflux_mask_mean(nn,:,bb),15);
+    backflux_runmean=runmean(backflux_mask_mean(nn,:,bb),15);
+    heatflux_runmean=runmean(heatflux_mask_mean(nn,:,bb),15);
+    otherflux_runmean=runmean(otherflux_mask_mean(nn,:,bb),15);
+    
+    plot(firstyear:lastyear,distflux_runmean(16:100),'linewidth',2)
+    plot(firstyear:lastyear,vitalflux_runmean(16:100),'linewidth',2)
+    plot(firstyear:lastyear,backflux_runmean(16:100),'linewidth',2)
+    plot(firstyear:lastyear,heatflux_runmean(16:100),'linewidth',2)
+    plot(firstyear:lastyear,otherflux_runmean(16:100),'linewidth',2)
+    clear distflux_runmean vitalflux_runmean backflux_runmean heatflux_runmean otherflux_runmean
+    
+    title(models{nn},'Fontsize',9)
+    set(gca,'XLim',[1900+y1+15,1900+y2-15])
+    if nn==nmod
+        l1=legend('Disturbance','Vitality','Background','Heat','Other');
+        set(l1,'Orientation','horizontal')
+        legend boxoff
+    end
+    if nn==1 || nn==4
+        ylabel('y^{-1}')
+    end
+    if nn<=3
+        set(gca,'XTickLabel','')
+    end
+    if nn>=4
+        xlabel('Year')
+    end
+end
+set(s(1),'Position',[0.07 0.55 0.25 0.35])
+set(s(2),'Position',[0.37 0.55 0.25 0.35])
+set(s(3),'Position',[0.67 0.55 0.25 0.35])
+set(s(4),'Position',[0.07 0.15 0.25 0.35])
+set(s(5),'Position',[0.37 0.15 0.25 0.35])
+set(s(6),'Position',[0.67 0.15 0.25 0.35])
+set(l1,'Position',[0.2 0.02 0.74 0.0298])
+
+%Needleleaf evergreen
+bb=6;
+figure
+colormap(lines(5))
+for nn=1:nmod %Make one plot per model
+    s(nn)=subplot(2,3,nn);
+    hold on
+    firstyear=1900+y1+15; %Only plot from 15 years into the dataset because using running mean
+    lastyear=1900+y2-15;
+    
+    %Temporary running mean variables
+    distflux_runmean=runmean(distflux_mask_mean(nn,:,bb),15);
+    vitalflux_runmean=runmean(vitalflux_mask_mean(nn,:,bb),15);
+    backflux_runmean=runmean(backflux_mask_mean(nn,:,bb),15);
+    heatflux_runmean=runmean(heatflux_mask_mean(nn,:,bb),15);
+    otherflux_runmean=runmean(otherflux_mask_mean(nn,:,bb),15);
+    
+    plot(firstyear:lastyear,distflux_runmean(16:100),'linewidth',2)
+    plot(firstyear:lastyear,vitalflux_runmean(16:100),'linewidth',2)
+    plot(firstyear:lastyear,backflux_runmean(16:100),'linewidth',2)
+    plot(firstyear:lastyear,heatflux_runmean(16:100),'linewidth',2)
+    plot(firstyear:lastyear,otherflux_runmean(16:100),'linewidth',2)
+    clear distflux_runmean vitalflux_runmean backflux_runmean heatflux_runmean otherflux_runmean
+    
+    title(models{nn},'Fontsize',9)
+    set(gca,'XLim',[1900+y1+15,1900+y2-15])
+    if nn==nmod
+        l1=legend('Disturbance','Vitality','Background','Heat','Other');
+        set(l1,'Orientation','horizontal')
+        legend boxoff
+    end
+    if nn==1 || nn==4
+        ylabel('y^{-1}')
+    end
+    if nn<=3
+        set(gca,'XTickLabel','')
+    end
+    if nn>=4
+        xlabel('Year')
+    end
+end
+set(s(1),'Position',[0.07 0.55 0.25 0.35])
+set(s(2),'Position',[0.37 0.55 0.25 0.35])
+set(s(3),'Position',[0.67 0.55 0.25 0.35])
+set(s(4),'Position',[0.07 0.15 0.25 0.35])
+set(s(5),'Position',[0.37 0.15 0.25 0.35])
+set(s(6),'Position',[0.67 0.15 0.25 0.35])
+set(l1,'Position',[0.2 0.02 0.74 0.0298])
+    
