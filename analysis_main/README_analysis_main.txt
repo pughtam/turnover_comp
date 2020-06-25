@@ -22,21 +22,22 @@ The following scripts are used to produce the indicated plots
 
 global_turn_table.m
 global_obs_totals.m
-Table 3
+Table 4
 
 global_turn_frac_map.m
-Fig. 2
+Fig. 1
 Fig. S3
 Fig. S6
 
-global_turn_frac_sd_space_time_comb.m
 global_turn_frac_sd.m
-global_turn_frac_sd_time.m
 Fig. 4
 Fig. S8
 
 turn_breakdown_bar.m
-Fig.5
+Fig.3
+
+tropical_plot_comparison.m
+Fig. 6
 
 dom_mort_mech_map.m
 Fig. 7
@@ -44,8 +45,10 @@ Fig. 7
 ipsl_line_plots.m
 Fig. 8
 
-global_turn_diff_map_ipsl.m
+biome_turn_flux_time.m
 Fig. 9
+Fig. 10
+Fig. S11-S17
 
 forest_cover_comparison.m
 Fig. S1
@@ -59,13 +62,10 @@ Fig. S5
 phen_map_plot.m
 Fig. S7
 
-tropical_plot_comparison.m
+global_turn_diff_map_ipsl.m
 Fig. S9
 
 phen_map_plot_ipsl.m
 Fig. S10
 
-biome_turn_flux_time.m
-Fig. S11-S17
-
-29.11.19
+25.06.20

@@ -44,10 +44,9 @@ does not imply endorsement by the U.S. Government.
 
 
 ----------REFERENCES----------
-Pugh, T.A.M., Rademacher, T.T., Shafer, S.L., Steinkamp, J., Barichivich, J., Beckage, B., 
+Pugh, T.A.M., Rademacher, T., Shafer, S.L., Steinkamp, J., Barichivich, J., Beckage, B., 
 Haverd, V., Harper, A., Heinke, J., Nishina, K., Rammig, A., Sato, H., Arneth, A., Hantson, 
-S., Hickler, T., Kautz, M., Quesada, B., Smith, B., Thonicke, K. (in review). Understanding 
-the uncertainty in global forest carbon turnover. Biogeosciences Discuss. 
-https://www.biogeosciences-discuss.net/discussion_papers.html
+S., Hickler, T., Kautz, M., Quesada, B., Smith, B., Thonicke, K. Understanding 
+the uncertainty in global forest carbon turnover. Biogeosciences, 2020. 
 
 

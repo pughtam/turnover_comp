@@ -1,5 +1,5 @@
-Scripts underlying kernel figures (Fig. 3 and 6) and preprocessing of satellite-based estimates in:
-Thomas A. M. Pugh, Tim T. Rademacher, Sarah L. Shafer, Jörg Steinkamp, Jonathan Barichivich, Brian Beckage, Vanessa Haverd, Anna Harper, Jens Heinke, Kazuya Nishina, Anja Rammig, Hisashi Sato, Almut Arneth, Stijn Hantson, Thomas Hickler, Markus Kautz, Benjamin Quesada, Benjamin Smith, Kirsten Thonicke. Understanding the uncertainty in global forest carbon turnover.
+Scripts underlying kernel figures (Fig. 2 and 5) and preprocessing of satellite-based estimates in:
+Thomas A. M. Pugh, Tim Rademacher, Sarah L. Shafer, Jörg Steinkamp, Jonathan Barichivich, Brian Beckage, Vanessa Haverd, Anna Harper, Jens Heinke, Kazuya Nishina, Anja Rammig, Hisashi Sato, Almut Arneth, Stijn Hantson, Thomas Hickler, Markus Kautz, Benjamin Quesada, Benjamin Smith, Kirsten Thonicke. Understanding the uncertainty in global forest carbon turnover.
 
 For queries, contact Tim T. Rademacher, trademacher@fas.harvard.edu or Thomas A. M. Pugh, t.a.m.pugh@bham.ac.uk
 

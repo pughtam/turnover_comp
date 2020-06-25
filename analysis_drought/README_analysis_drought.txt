@@ -1,5 +1,5 @@
 Scripts underlying the drought mortality evaluation in Table S5 of:
-Thomas A. M. Pugh, Tim T. Rademacher, Sarah L. Shafer, Jörg Steinkamp, Jonathan Barichivich, Brian Beckage, Vanessa Haverd, Anna Harper, Jens Heinke, Kazuya Nishina, Anja Rammig, Hisashi Sato, Almut Arneth, Stijn Hantson, Thomas Hickler, Markus Kautz, Benjamin Quesada, Benjamin Smith, Kirsten Thonicke. Understanding the uncertainty in global forest carbon turnover.
+Thomas A. M. Pugh, Tim Rademacher, Sarah L. Shafer, Jörg Steinkamp, Jonathan Barichivich, Brian Beckage, Vanessa Haverd, Anna Harper, Jens Heinke, Kazuya Nishina, Anja Rammig, Hisashi Sato, Almut Arneth, Stijn Hantson, Thomas Hickler, Markus Kautz, Benjamin Quesada, Benjamin Smith, Kirsten Thonicke. Understanding the uncertainty in global forest carbon turnover.
 
 For queries contact Jörg Steinkamp, joerg.steinkamp@uni-mainz.de (author) or Thomas A. M. Pugh, t.a.m.pugh@bham.ac.uk
 
