@@ -1,5 +1,5 @@
 Scripts underlying figures in:
-Thomas A. M. Pugh, Tim T. Rademacher, Sarah L. Shafer, Jörg Steinkamp, Jonathan Barichivich, Brian Beckage, Vanessa Haverd, Anna Harper, Jens Heinke, Kazuya Nishina, Anja Rammig, Hisashi Sato, Almut Arneth, Stijn Hantson, Thomas Hickler, Markus Kautz, Benjamin Quesada, Benjamin Smith, Kirsten Thonicke. Understanding the uncertainty in global forest carbon turnover. Biogeosciences, 2020.
+Thomas A. M. Pugh, Tim Rademacher, Sarah L. Shafer, Jörg Steinkamp, Jonathan Barichivich, Brian Beckage, Vanessa Haverd, Anna Harper, Jens Heinke, Kazuya Nishina, Anja Rammig, Hisashi Sato, Almut Arneth, Stijn Hantson, Thomas Hickler, Markus Kautz, Benjamin Quesada, Benjamin Smith, Kirsten Thonicke. Understanding the uncertainty in global forest carbon turnover. Biogeosciences, 2020.
 
 For queries, contact Thomas A. M. Pugh, t.a.m.pugh@bham.ac.uk
 
